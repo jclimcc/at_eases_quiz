@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Role;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,9 +27,14 @@ class DatabaseSeeder extends Seeder
             $user = User::factory()->create([
                 'name' => 'Test User ' . $i,
                 'email' => 'test' . $i . '@example.com',
+                'password' => bcrypt('123'),
+                'email_verified_at' => now(),
             ]);
             $randomRole = Role::inRandomOrder()->first();
             $user->roles()->attach($randomRole);
         }
+
+        // create some products
+        Product::factory(10)->create();
     }
 }
