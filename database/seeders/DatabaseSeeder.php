@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         Role::factory()->create(['name' => 'driver']);
 
         // Create users and assign them random roles
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
 
             $user = User::factory()->create([
                 'name' => 'Test User ' . $i,
