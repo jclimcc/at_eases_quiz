@@ -17,15 +17,12 @@ class User
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //check role. if role is not admin, redirect to welcome page
-        if (!Auth::check()) {
-            // Redirect the user to the login page if they are not logged in.
-            return redirect('login');
-        }
 
         if (!$request->user()->hasRole('user')) {
+
             // Redirect the user to the admin dashboard if they are an admin.
-            return redirect('/dashboard');
+
+            return redirect('admin/dashboard');
         }
 
         return $next($request);

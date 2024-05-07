@@ -19,6 +19,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'address',
         'password',
     ];
 
@@ -52,5 +54,10 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return $this->roles->contains('name', $role);
+    }
+
+    public function assignRole($role)
+    {
+        $this->roles()->attach(Role::where('name', $role)->first());
     }
 }
