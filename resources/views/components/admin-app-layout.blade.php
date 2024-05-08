@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -53,7 +56,7 @@
                         <li class="mt-2">
                             <p class="font-semibold text-gray-800">Product Management</p>
                         </li>
-                        <li><a href="{{ route('admin.products') }}"
+                        <li><a href="{{ route('admin.products.index') }}"
                                 class="block p-2 text-gray-800 transition duration-200 rounded hover:text-white hover:bg-gray-600">Products</a>
                         </li>
                     </ul>
@@ -61,9 +64,15 @@
                 <main class="flex-1 p-4 overflow-y-scroll">
                     {{ $slot }}
                 </main>
+
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    @stack('scripts')
+    {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
 </body>
 
 </html>

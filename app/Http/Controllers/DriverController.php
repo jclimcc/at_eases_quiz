@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\DriverUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class DriverController extends Controller
 {
+
+
     public function index()
     {
         $drivers = User::whereHas('roles', function ($query) {
@@ -75,5 +78,15 @@ class DriverController extends Controller
         $driver->delete();
 
         return redirect()->route('admin.drivers.index')->with('success', 'User deleted successfully');
+    }
+
+
+    public function customerList()
+    {
+        $customers = User::whereHas('roles', function ($query) {
+            $query->where('name', 'customer');
+        })->paginate(10);
+
+        return view('driver.customerlist', ['customers' => $customers]);
     }
 }

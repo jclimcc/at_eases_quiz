@@ -15,6 +15,7 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         Admin {{ __('Dashboard') }}
                     </x-nav-link>
+
                 </div>
             </div>
 
@@ -38,7 +39,9 @@
                     </x-slot>
 
                     <x-slot name="content">
-
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

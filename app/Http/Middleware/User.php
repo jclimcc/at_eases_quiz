@@ -17,13 +17,13 @@ class User
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        if (!$request->user()->hasRole('user')) {
-
-            // Redirect the user to the admin dashboard if they are an admin.
-
+        if ($request->user()->hasRole('admin')) {
             return redirect('admin/dashboard');
         }
+        if ($request->user()->hasRole('driver')) {
+            return redirect('driver/dashboard');
+        }
+
 
         return $next($request);
     }

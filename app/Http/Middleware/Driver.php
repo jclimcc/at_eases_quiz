@@ -4,10 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class Driver
 {
     /**
      * Handle an incoming request.
@@ -16,15 +15,13 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-
+        if ($request->user()->hasRole('admin')) {
+            return redirect('admin/dashboard');
+        }
         if ($request->user()->hasRole('user')) {
-            // Redirect the user to the admin dashboard if they are an admin.
             return redirect('/dashboard');
         }
-        if ($request->user()->hasRole('driver')) {
-            // Redirect the user to the admin dashboard if they are an admin.
-            return redirect('driver/dashboard');
-        }
+
         return $next($request);
     }
 }

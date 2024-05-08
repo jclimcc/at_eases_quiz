@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         $this->roles()->attach(Role::where('name', $role)->first());
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_prices', 'user_id', 'product_id');
+    }
 }

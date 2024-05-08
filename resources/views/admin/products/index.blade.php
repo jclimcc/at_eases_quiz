@@ -1,7 +1,7 @@
 <x-admin-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            Drivers Management
+            Product Management
         </h2>
     </x-slot>
     @if (session('success'))
@@ -11,8 +11,8 @@
         </div>
     @endif
     <div class="py-3">
-        <a href="{{ route('admin.drivers.create') }}"
-            class="px-4 py-3 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Add New Driver</a>
+        <a href="{{ route('admin.products.create') }}"
+            class="px-4 py-3 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Add New Product</a>
     </div>
 
     <table class="w-full my-4 bg-white rounded shadow-md text-md">
@@ -20,23 +20,23 @@
             <tr class="border-b">
                 <th class="p-3 px-5 text-left">ID</th>
                 <th class="p-3 px-5 text-left">Name</th>
-                <th class="p-3 px-5 text-left">Email</th>
                 <th class="p-3 px-5 text-left">Created At</th>
                 <th class="p-3 px-5 text-left">Actions</th>
             </tr>
-            @forelse ($drivers as $driver)
+            @forelse ($products as $product)
                 <tr class="border-b hover:bg-orange-100">
-                    <td class="p-3 px-5">{{ $driver->id }}</td>
-                    <td class="p-3 px-5">{{ $driver->name }}</td>
-                    <td class="p-3 px-5">{{ $driver->email }}</td>
-                    <td class="p-3 px-5">{{ $driver->created_at }}</td>
+                    <td class="p-3 px-5">{{ $product->id }}</td>
+                    <td class="p-3 px-5">{{ $product->name }}</td>
+                    <td class="p-3 px-5">{{ $product->created_at }}</td>
                     <td class="p-3 px-5">
-                        <a href="{{ route('admin.drivers.show', $driver) }}"
+                        <a href="{{ route('admin.products.show', $product) }}"
                             class="text-blue-400 underline hover:text-blue-600">View</a>
-                        <a href="{{ route('admin.drivers.edit', $driver) }}"
+                        <a href="{{ route('admin.products.edit', $product) }}"
                             class="ml-4 text-blue-400 underline hover:text-blue-600">Edit</a>
-                        <form action="{{ route('admin.drivers.destroy', $driver) }}" method="POST" class="inline"
-                            onsubmit="return confirm('Are you sure you want to delete this driver?');">
+                        <a href="{{ route('admin.products.details.show', $product) }}"
+                            class="ml-4 text-blue-400 underline hover:text-blue-600">Product Details</a>
+                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="inline"
+                            onsubmit="return confirm('Are you sure you want to delete this product?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
@@ -46,11 +46,11 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="p-3 px-5 text-center">No drivers found.</td>
+                    <td colspan="5" class="p-3 px-5 text-center">No products found.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
-    {{ $drivers->links() }}
+    {{ $products->links() }}
 </x-admin-app-layout>
