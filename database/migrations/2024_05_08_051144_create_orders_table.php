@@ -10,9 +10,18 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+    { 
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id')->unique();
+            $table->string('address');
+            $table->text('remarks')->nullable();
+            $table->boolean('is_paid')->default(false);
+       
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('driver_assigned')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('assigned_by')->nullable()->constrained('users')->onDelete('set null');
+            // Add any other columns as needed
             $table->timestamps();
         });
     }

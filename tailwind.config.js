@@ -18,6 +18,7 @@ export default {
             },
             colors: {
                 'bluec':'#2f6bdd',
+                'bgwhite':'#f9f8fb',
             },
         },
     },

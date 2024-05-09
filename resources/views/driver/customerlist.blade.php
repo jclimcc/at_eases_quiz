@@ -1,4 +1,4 @@
-<x-frontend-app-layout>
+<x-frontend-driver-app-layout>
     <x-slot name="header">
         <h2 class="text-5xl font-semibold leading-tight text-gray-800">
             Customer List {{ now()->format('l j, F') }}
@@ -18,4 +18,4 @@
 
 
 
-</x-frontend-app-layout>
+</x-frontend-driver-app-layout>

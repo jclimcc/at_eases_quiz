@@ -1,4 +1,4 @@
-<x-frontend-app-layout>
+<x-frontend-driver-app-layout>
     <x-slot name="header">
         <h2 class="text-5xl font-semibold leading-tight text-gray-800">
             Driver {{ now()->format('l j, F') }}
@@ -14,4 +14,4 @@
             {{ __('Log Out') }}
         </x-responsive-nav-link>
     </form>
-</x-frontend-app-layout>
+</x-frontend-driver-app-layout>

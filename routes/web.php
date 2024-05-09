@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\Front\UserController as FrontUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 
@@ -25,15 +26,60 @@ Route::middleware(['auth', 'user'])->group(function () {
 
     Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
 });
-
+Route::prefix('front')->middleware(['auth', 'user'])->group(function () {
+    Route::get('/user/dashboard', [FrontUserController::class, 'index'])->name('front.user.dashboard');
+    Route::get('/user/products', [FrontUserController::class, 'index'])->name('front.user.products');
+    Route::get('/user/carts', [FrontUserController::class, 'carts'])->name('front.user.carts');
+});
 Route::prefix('driver')->middleware(['auth', 'driver'])->group(function () {
     Route::get('/dashboard', function () {
         return view('driver.dashboard');
-    })->name('driver.dashboard');
+    })->name('front.driver.dashboard');
 
-    Route::get('/customerlist', [DriverController::class, 'customerList'])->name('driver.customerList');
+    Route::get('/customerlist', [DriverController::class, 'customerList'])->name('front.driver.customerList');
 });
 
+Route::prefix('data')->group(function () {
+    Route::get('/order', function () {
+
+        //insert a dummy order
+        $order = new \App\Models\Order();
+        $order->user_id = 1;
+        $order->order_id = 'ORD-0001';
+        $order->address = '123, Main Street, New York';
+        $order->remarks = 'Please deliver before 5 PM';
+        $order->is_paid = false;
+        $order->user_id = 1;
+        $order->driver_assigned = null;
+        $order->assigned_by = null;
+        $order->save();
+
+        //attach products to the order
+        $orderItem = new \App\Models\OrderItem();
+        $orderItem->order_id = $order->id;
+        $orderItem->product_id = 1;
+        $orderItem->product_name = 'Product 1';
+        $orderItem->quantity = 2;
+        $orderItem->price = 100;
+        $orderItem->total = 200;
+        $orderItem->foc_type = 'quantity';
+        $orderItem->foc_threshold = 10;
+        $orderItem->foc_free_amount = 1;
+        $orderItem->save();
+
+        $orderItem = new \App\Models\OrderItem();
+        $orderItem->order_id = $order->id;
+        $orderItem->product_id = 2;
+        $orderItem->product_name = 'Product 2';
+        $orderItem->quantity = 3;
+        $orderItem->price = 100;
+        $orderItem->total = 300;
+        $orderItem->foc_type = 'quantity';
+        $orderItem->foc_threshold = 10;
+        $orderItem->foc_free_amount = 1;
+        $orderItem->save();
+    })->name('data.order');
+});
 
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
